@@ -5,8 +5,10 @@ use quote::quote;
 #[proc_macro_derive(EnumFrom)]
 pub fn derive_enum_from(input: TokenStream) -> TokenStream {
   let input = syn::parse_macro_input!(input as syn::DeriveInput);
-  // print!("{:#?}", input);
+  print!("{:#?}", input);
   let ident = input.ident;
+  let generics = input.generics;
+  println!("{:?}", generics);
   let variants = match input.data {
     syn::Data::Enum(data) => data.variants,
     _ => panic!("EnumFrom only works on enums"),
@@ -22,7 +24,7 @@ pub fn derive_enum_from(input: TokenStream) -> TokenStream {
           let field = fields.unnamed.first().expect("should have 1 field");
           let ty = &field.ty;
           quote! {
-            impl From<#ty> for #ident {
+            impl #generics From<#ty> for #ident #generics {
               fn from(v: #ty) -> Self {
                 #ident::#var(v)
               }

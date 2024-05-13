@@ -1,23 +1,23 @@
 use rust_macros::EnumFrom;
 
 #[derive(EnumFrom, Debug)]
-enum Direction {
-  Up(DirectionUp),
+enum Direction<T> {
+  Up(DirectionUp<T>),
   Down,
 }
 
 #[derive(Debug)]
-struct DirectionUp {
-  speed: u32,
+struct DirectionUp<T> {
+  speed: T,
 }
 
 fn main() {
-  let up: Direction = DirectionUp::new(42).into();
+  let up: Direction<i32> = DirectionUp::new(42).into();
   println!("{:?}", up);
 }
 
-impl DirectionUp {
-  fn new(speed: u32) -> Self {
+impl<T> DirectionUp<T> {
+  fn new(speed: T) -> Self {
     Self { speed }
   }
 }
