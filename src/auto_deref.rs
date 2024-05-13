@@ -69,7 +69,3 @@ pub fn process_auto_deref(input: DeriveInput) -> TokenStream {
   }
   .into()
 }
-
-pub fn process_auto_debug(input: DeriveInput) -> TokenStream {
-  quote! {}.into()
-}
